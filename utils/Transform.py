@@ -1,6 +1,6 @@
 class Transform:
     def __init__(self):
-        self._transformation_map = {"a": "{", "e": "}", "i": "@", "o": "&", "u": "]","{":"a","}":"e","@":"i","&":"o","]":"u","ñ":"a"}
+        self._transformation_map = {"a": "{", "e": "}", "i": "@", "o": "&", "u": "]","{":"a","}":"e","@":"i","&":"o","]":"u"}
         self._inverse_map = {v: k for k, v in self._transformation_map.items()}
 
     def crypt(self, message):
