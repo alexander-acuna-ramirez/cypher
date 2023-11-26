@@ -1,7 +1,9 @@
 import re
+import hashlib
 from utils.Vigenere import Vigenere
 from utils.Transform import Transform
 from utils.AES import Aes
+
 
 
 from dotenv import load_dotenv
@@ -45,9 +47,16 @@ class Crypt:
         return self._vgc.crypt(message=message)
     def step3(self, message):
         return self._agc.crypt(message=message)
-
     def encrypt(self, message):
+
+        hash = self.hash(message=message)
+
         result = self.step1(message)
         result = self.step2(result)
         result = self.step3(result)
-        return result
+        return f"{result}###{hash}"
+        #return result + "" + hash
+    def hash(self, message):
+        hash_sha256 = hashlib.sha256(message.encode()).hexdigest()
+        return hash_sha256
+    

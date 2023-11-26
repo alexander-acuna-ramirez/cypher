@@ -1,6 +1,7 @@
 from utils.Vigenere import Vigenere
 from utils.Transform import Transform
 from utils.AES import Aes
+import hashlib
 import re
 
 from dotenv import load_dotenv
@@ -42,7 +43,24 @@ class Decrypt:
     
 
     def decrypt(self, message):
-        result = self.step1(message)
-        result = self.step2(result)
-        result = self.step3(result)
-        return result
+        try:
+            messageStructure = message.split("###")
+
+            data = messageStructure[0]
+            hash = messageStructure[1]
+
+            result = self.step1(data)
+            result = self.step2(result)
+            result = self.step3(result)
+
+            if self.hash(result) != hash:
+                raise ValueError("Hash mismatch: The calculated hash does not match the original hash of the message body.")
+            return result
+        except ValueError as ve:
+            print(f"Error: {ve}")
+            exit(1)
+        
+
+    def hash(self, message):
+        hash_sha256 = hashlib.sha256(message.encode()).hexdigest()
+        return hash_sha256

@@ -3,12 +3,12 @@ from lib.Crypt import Crypt
 from lib.Decrypt import Decrypt
 load_dotenv()
 
-encrypted=Crypt().encrypt("{¿Cómo esta?ñ] é()/&%$#!|¡¬°*¨´}-_.:,;~`^@😀")
+encrypted=Crypt().encrypt("¿Cómo estas?")
 print("Encriptado: " + encrypted)
+
 decrypt = Decrypt()
 print("Decriptado: " + decrypt.decrypt(message=encrypted))
 
-
-primer = decrypt.step2(message='l¿Kká& }aú{?')
-segundo = decrypt.step3(message=primer)
-print(segundo)
+encryptedHash = encrypted.split("###")[1]
+changed = Crypt().step3("Otro mensaje")
+print("Decriptado2: " + decrypt.decrypt(message=changed + "###" + encryptedHash))
